@@ -1,5 +1,9 @@
+{% load static %}
+
 <!--HTML nakopírovaný z Bootstrapu, zmenený iba navbar na dark a background dark:-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <!--vloženie obrázka zo static files-->   
+ <img id="logo" src="{% static 'images/logo.png' %}">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
