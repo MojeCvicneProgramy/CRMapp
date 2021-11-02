@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import SET_NULL
 
 # Create your models here.
 
@@ -13,6 +14,13 @@ class Customer (models.Model):
     def __str__(self):
         return self.name
 
+class Tag (models.Model):
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Product (models.Model):
     # zadefinujeme premennú STATUS aby sme ho mohli zvoliť z dropdown menu (tuples)
     CATEGORY = (
@@ -22,8 +30,13 @@ class Product (models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField(null=True)
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)  # výber choices ťahá z premennej CATEGORY zadefinovanej vyššie
-    destcription = models.CharField(max_length=200, null=True)
+    destcription = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.name
+    
 
 class Order (models.Model):
     # zadefinujeme premennú STATUS aby sme ho mohli zvoliť z dropdown menu (tuples)
@@ -32,7 +45,10 @@ class Order (models.Model):
         ('Out for delivery', 'Out for delivery'),
         ('Delivered', 'Delivered'),
         )
-    # customer = ...zadefinujeme neskôr
-    # product = ...zadefinujeme neskôr
+    customer = models.ForeignKey(Customer, null=True, on_delete=SET_NULL)  # prepojenie na dáta o zákazníkovi, one to many relationship
+    product = models.ForeignKey(Product, null=True, on_delete=SET_NULL)  # prepojenie na dáta o produkte, one to many relationship
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)  # výber choices ťahá z premennej STATUS zadefinovanej vyššie
+
+    def __str__(self):
+        return self.name

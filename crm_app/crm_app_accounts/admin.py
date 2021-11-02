@@ -9,3 +9,4 @@ from .models import *
 admin.site.register(Customer)  # zaregistrovanie zakaznika
 admin.site.register(Product)  # zaregistrovanie produktu
 admin.site.register(Order)  # zaregistrovanie objednávky aby ich zobrazovalo na stránke
+admin.site.register(Tag)  # zaregistrovanie zakaznika
