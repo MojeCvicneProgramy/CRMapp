@@ -22,7 +22,14 @@ def products(request):
 
     return render(request, 'accounts/products.html', {'products': products})  # tu vytvorené 'products' použijeme v templates/products.py
 
-def customers(request):
-    return render(request, 'accounts/customer.html')
+def customers(request, pk_test):
+    customer = Customer.objects.get(id=pk_test)
+    orders = customer.order_set.all()
+    order_count = orders.count()
+
+    context = {'customer':customer, 'orders':orders, 'order_count':order_count}
+
+    return render(request, 'accounts/customer.html', context)
+
 
   
